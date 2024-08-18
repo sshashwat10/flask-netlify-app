@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 import os
+import torch
 import numpy as np
 from PIL import Image
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
@@ -80,3 +81,8 @@ def upload_and_ocr():
         return jsonify({"message": "File successfully uploaded", "ocr_result": result}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+if __name__ == "__main__":
+    # Use Railway-assigned port
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
